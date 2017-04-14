@@ -45,7 +45,7 @@ class Pt3D:
         return (self.x, self.y, self.z)
 
     def dist3D(self, pt):
-        """Returns the 3D distances to another point pt."""
+        """Returns the 3D distance to another point pt."""
 
         # Return 3D distance to point pt (Pythagorean theorem)
         return ((self.x - pt.x)**2 + (self.y - pt.y)**2 + (self.z - pt.z)**2)**.5
