@@ -42,7 +42,7 @@ class BuzzLevel:
         self._level = 0             # beep level initialized to 0
         self._active = False        # object active state initialized to False
         self.run()                  # activate object
-        
+
     def _beep(self, on):
         """Beeps the buzzer once followed by a silence.
 
@@ -68,7 +68,8 @@ class BuzzLevel:
 
     def run(self):
         """Launches the _run method in a dedicated thread so it can run in the
-        background while the calling program continues."""
+        background while the calling program continues.
+        """
 
         if not self._active:
             thread1 = threading.Thread(target = self._run, args = [])
@@ -89,10 +90,10 @@ class BuzzLevel:
         level: the number of beeps to be produced (0 to 4)
         """
         try:
-            if type(level) != int:
+            if type(level) != int:  # check that level is an integer
                 raise TypeError("level must be an integer.")
-            elif level >=0 and level <= 4:
-                self._level = level
+            elif level >=0 and level <= 4: # check that level is between 0 and 4
+                self._level = level # set _level attribute
             else:
                 raise ValueError("level must be between 0 and 4.")
 
