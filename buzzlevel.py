@@ -36,61 +36,73 @@ class BuzzLevel:
 
     def __init__(self):
         """Constructor. Returns a BuzzLevel object instance"""
-        self.buzzer = Buzzer(4) # gpiozero Buzzer object on pin 4.
-        self.onTime = .01       # beep duration
-        self.offTime = .19      # beep silence duration
-        self.level = 0          # beep level initialized to 0
-        self.active = False     # object active state initialized to False
-        self.run()              # activate object
-
-    def beep(self, on):
+        self._buzzer = Buzzer(4)    # gpiozero Buzzer object on pin 4.
+        self._onTime = .01          # beep duration
+        self._offTime = .19         # beep silence duration
+        self._level = 0             # beep level initialized to 0
+        self._active = False        # object active state initialized to False
+        self.run()                  # activate object
+        
+    def _beep(self, on):
         """Beeps the buzzer once followed by a silence.
 
         Keyword arguments:
         on: Produces a beep if True, produces a silence if False.
         """
         if on:
-            self.buzzer.on()
-            time.sleep(self.onTime)
-            self.buzzer.off()
-            time.sleep(self.offTime)
+            self._buzzer.on()
+            time.sleep(self._onTime)
+            self._buzzer.off()
+            time.sleep(self._offTime)
         else:
-            time.sleep(self.onTime + self.offTime)
+            time.sleep(self._onTime + self._offTime)
 
-    def beepLevel(self):
+    def _beepLevel(self):
         """Beeps the buzzer a number of times set by the level attribute followed
         by a number of silences so that the total duration is always constant."""
 
-        for i in range(self.level):
-            self.beep(True)
-        for i in range(5 - self.level):
-            self.beep(False)
+        for i in range(self._level):
+            self._beep(True)
+        for i in range(5 - self._level):
+            self._beep(False)
 
     def run(self):
         """Launches the _run method in a dedicated thread so it can run in the
         background while the calling program continues."""
 
-        if not self.active:
+        if not self._active:
             thread1 = threading.Thread(target = self._run, args = [])
             thread1.start()
 
     def _run(self):
-        """Executes the beepLevel method as long as the active attribute is
+        """Executes the beepLevel method as long as the _active attribute is
         True."""
 
-        self.active = True
-        while self.active:
-            self.beepLevel()
+        self._active = True
+        while self._active:
+            self._beepLevel()
 
     def setLevel(self, level):
-        """Sets the buzzer level attribute.
+        """Sets the buzzer _level attribute.
 
         Keyword arguments:
         level: the number of beeps to be produced (0 to 4)
         """
-        self.level = level
+        try:
+            if type(level) != int:
+                raise TypeError("level must be an integer.")
+            elif level >=0 and level <= 4:
+                self._level = level
+            else:
+                raise ValueError("level must be between 0 and 4.")
+
+        except ValueError:
+            raise
+
+        except TypeError:
+            raise
 
     def stop(self):
-        """Sets the active attribute to False. The background thread will stop
+        """Sets the _active attribute to False. The background thread will stop
         automatically at the end of the current loop."""
-        self.active = False
+        self._active = False
