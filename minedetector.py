@@ -55,7 +55,7 @@ class MineDetector:
         self._ledGreen = LED(27)     # Green LED on pin 27
         self._ledYellow = LED(22)    # Yellow LED on pin 22
         self._ledRed = LED(16)       # Red LED on pin 16
-        self._buzzer = BuzzLevel()
+        self.buzzer = BuzzLevel()
 
     def onValue(self, value):
         """Turn LEDs and buzzer on corresponding to a distance value.
@@ -84,7 +84,7 @@ class MineDetector:
             level = 4
         else:
             self._ledRed.off()
-        self._buzzer.setLevel(level)    # set buzzer level
+        self.buzzer.setLevel(level)    # set buzzer level
 
     def off(self):
         """Turn all LEDs and buzzer off."""
@@ -92,7 +92,7 @@ class MineDetector:
         self._ledGreen.off()
         self._ledYellow.off()
         self._ledRed.off()
-        self._buzzer.setLevel(0)    # set buzzer level to 0 (off)
+        self.buzzer.setLevel(0)    # set buzzer level to 0 (off)
 
     def _blinkValue(self, value, freq):
         """Blink LEDs corresponding to a distance value.
