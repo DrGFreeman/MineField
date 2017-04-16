@@ -246,7 +246,7 @@ succeeded = False
 # Post player instructions in Minecraft window
 mc.postToChat("Find and destroy the gold block")
 mc.postToChat("Beware of mines!!!")
-mc.postToChat("Use your mine detector")
+mc.postToChat("Use your mine detector to avoid mines")
 
 print("Game start")
 
@@ -339,7 +339,7 @@ try:
     # case where the player has succeeded in completing the mission
     else:
         # post message to Minecraft chat
-        mc.postToChat("Felicitations, vous avez succeeded!")
+        mc.postToChat("Congratulations, you have succeeded!")
 
         # stop mine detector
         mineDetector.off()
