@@ -47,6 +47,13 @@ from pt3d import Pt3D
 ########################################
 ### Functions
 
+def clean():
+    """Cleans the game blocks in case of interruption."""
+
+    # set base and goal blocks to air
+    mc.setBlock(base.x, base.y, base.z, block.AIR)
+    mc.setBlock(goal.x, goal.y, goal.z, block.AIR)
+
 def explosion(dim):
     """Create an explosion effect at the player position."""
     # get the player position
@@ -82,20 +89,25 @@ def popMines(mines, point, distance):
     """
     # list of the indexes of mines in proximity of the point (initially empty)
     minesProx = []
+    
     # for all mines,
     for i in range(len(mines)):
+        
          # calculate distance to mine
         distMine = point.distAxes(mines[i], 5)
+        
         # if mine is within specified distance
         if distMine <= distance:
             # add mine index to proximity list
             minesProx.append(i)
+            
     # if there are mines in the proximity list
     if len(minesProx) > 0:
         # for all mine indexes in proximity list
         for i in minesProx:
             # remove mine from mines list
             mines.pop(i)
+            
     # print number of mines eliminated
     print("   ", len(minesProx), " Mines eliminated.")
     # return mines list
@@ -134,26 +146,36 @@ mc = Minecraft.create()
 
 ## Random definition of the base location
 print("Defining the base location")
+
 # State variable defining whether the base block has been successfully defined
 blockBaseOK = False
+
 # Try base block positions until an acceptable position is found
 while not blockBaseOK:
+
     # define a random point (Pt3D type) within +/- 35 blocks of world origin
     base = Pt3D(random.randint(-35, 35), 0, random.randint(-35, 35))
+
     # get world height at base position
     base.y = mc.getHeight(base.x, base.z)
+
     # get the block type under base position
     blockBaseType = mc.getBlock(base.x, base.y - 1, base.z)
+
     # check that block type not is water, lava or a tree
     if not blockBaseType in [8, 9, 10, 11, 18]:
         # base position is acceptable
         blockBaseOK = True
+
 print("   Base position defined successfully.")
 
 ## Random generation of mines
+
 print("Generating mines")
+
 # List of mines (Pt3D objects, initially empty)
 mines = []
+
 # Do for each mine
 for mine in range(nbMines):
     # create Pt3D type object at random location
@@ -163,32 +185,41 @@ for mine in range(nbMines):
 
 # Check and remove mines within trigger distance of base location
 print("Verifying mines at start position")
-mines = popMines(mines, base, distMineTrigger)
+mines = popMines(mines, base, distMineTrigger + 1)
 
 ## Define goal position (position relative to base location)
+
 print("Défining the goal location")
+
 # State variable defining whether the goal block has been successfully defined
 blockGoalOK = False
+
 # Try goal block positions until an acceptable position is found
 while not blockGoalOK:
+
     # set the azimut to the goal randomly between -180 and 180 degrees
     goalAzimut = random.uniform(-math.pi, math.pi)
+
     # define a point (Pt3D type) at goal distance and goal azimut from base
     goal = Pt3D(goalDist * math.cos(goalAzimut) + base.x, 0,
                 goalDist * math.sin(goalAzimut) + base.z)
+
     # get world height at goal position
     goal.y = mc.getHeight(goal.x, goal.z)
+
     # get the block type under goal position
     blockGoalType = mc.getBlock(goal.x, goal.y - 1, goal.z)
+
     # check that block type not is water, lava or a tree
     if not blockGoalType in [8, 9, 10, 11, 18]:
         # goal position is acceptable
         blockGoalOK = True
+
 print("   Goal position defined successfully")
 
 # Check and remove mines within trigger distance of base location
 print("Verifying mines at goal position")
-mines = popMines(mines, goal, distMineTrigger)
+mines = popMines(mines, goal, distMineTrigger + 1)
 
 # Create a glowing obsidian block at base position
 mc.setBlock(base.x, base.y, base.z, block.GLOWING_OBSIDIAN)
@@ -235,10 +266,12 @@ try:
         ## Calculate distance to the nearest mine
         # set min distance to a large value
         distMin = 1000000.
+
         # do for each mine
         for mine in mines:
             # calculate distance to mine in horizontal plane
             dist = pos.distAxes(mine, 5)
+            
             # if distance is smaller than current min distance
             if dist < distMin:
                 # set distance as new min distance
@@ -254,6 +287,7 @@ try:
 
         # check if the goal block is has been hit (block is air)
         if mc.getBlock(goal.x, goal.y, goal.z) == 0:
+
             # if block has just been hit
             if not goalReached:
                 # set goal reached to True so messages appear only once
@@ -265,10 +299,12 @@ try:
 
         # check if the base block is has been hit (block is air)
         if mc.getBlock(base.x, base.y, base.z) == 0:
+
             # if goal is already reached
             if goalReached:
                 # set succeeded to true
                 succeeded = True
+
             # if goal is not already reached, player must first reach the goal
             else:
                 # post message to Minecraft chat
@@ -293,8 +329,7 @@ try:
         print("Player is dead - cleaning up game")
 
         # set base and goal blocks to air
-        mc.setBlock(base.x, base.y, base.z, block.AIR) # On enlève le bloc à la base
-        mc.setBlock(goal.x, goal.y, goal.z, block.AIR) # On enlève le bloc à l'objectif
+        clean()
 
         # blink mine detector leds for a few seconds
         mineDetector.blinkValue(0, 3)
@@ -320,11 +355,14 @@ try:
 # Handle player interruption (Ctrl-C)
 except KeyboardInterrupt:
     print("Game interrupted - cleaning up game")
-    # set base and goal blocks to air
-    mc.setBlock(base.x, base.y, base.z, block.AIR)
-    mc.setBlock(goal.x, goal.y, goal.z, block.AIR)
 
+# Close game - do clean-up and close running threads
 finally:
     # set base and goal blocks to air
-    mc.setBlock(base.x, base.y, base.z, block.AIR)
-    mc.setBlock(goal.x, goal.y, goal.z, block.AIR)
+    clean()
+
+    # stop mine detector
+    mineDetector.off()
+    mineDetector.buzzer.stop()
+
+    print("Game closed successfully")
