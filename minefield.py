@@ -280,7 +280,7 @@ try:
         # display distance on mine detector (LEDs and buzzer)
         mineDetector.onValue(distMin)
 
-        # if distance is smaller than mine trigger distanc...
+        # if distance is smaller than mine trigger distance...
         if distMin <= distMineTrigger:
             # the player is dead!
             alive = False
