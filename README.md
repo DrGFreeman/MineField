@@ -18,15 +18,15 @@ Try it out and _have a blast_!
 
 # Screenshots
 
-![Game start](/doc/img/start.png)*Game start instructions. Note the red glowing obsidian block. The player will need to return to this block after having destroyed the block of gold.*
+![Game start](/doc/img/start.png)<br>*Game start instructions. Note the red glowing obsidian block. The player will need to return to this block after having destroyed the block of gold.*
 
-![Block of gold](/doc/img/gold.png)*The block of gold to be found and destroyed.*
+![Block of gold](/doc/img/gold.png)<br>*The block of gold to be found and destroyed.*
 
-![Objective reached](/doc/img/objReached.png)*Objective reached, now safely return to the starting point.*
+![Objective reached](/doc/img/objReached.png)<br>*Objective reached, now safely return to the starting point.*
 
-![Succeeded](/doc/img/succeeded.png)*Destroy the glowing obsidian block at the start position to complete the mission.*
+![Succeeded](/doc/img/succeeded.png)<br>*Destroy the glowing obsidian block at the start position to complete the mission.*
 
-![Oops!](/doc/img/boom.png)*Oops! Things do not always go according to plan...*
+![Oops!](/doc/img/boom.png)<br>*Oops! Things do not always go according to plan...*
 
 # Installing the game
 
@@ -38,9 +38,11 @@ To install the _MineField_ game, open a terminal on the Raspberry Pi and clone t
 
 # Playing the game
 
-Prior launching the game, launch Minecraft Pi edition on the Raspbery Pi and enter the world of your choice. Hit the _TAB_ key to exit the Minecraft window.
+Prior launching the game, launch Minecraft Pi edition on the Raspbery Pi and enter the world of your choice.  See [Getting Started with Minecraft Pi](https://www.raspberrypi.org/learning/getting-started-with-minecraft-pi/worksheet/) in the [Raspberry Pi Learning Resources](https://www.raspberrypi.org/resources/) for an introduction to Minecraft Pi edition.
 
 Beware, mine explosions may create craters or damage constructions in the selected world. If you want to avoid any damage to your worlds, create a new world to play this game.
+
+Hit the _TAB_ key to exit the Minecraft window.
 
 To launch the game, open a terminal on the Raspbery Pi. Change to the MineField directory:
 
@@ -55,10 +57,9 @@ Double click in the Minecraft window to start playing.
 To launch a new game, hit the _TAB_ key to exit the Minecraft window and relaunch the script in the terminal.
 
 # Making the mine detector
+The mine detector has two indication methods, a distance scale made of four [LEDs](https://www.raspberrypi.org/learning/physical-computing-with-python/worksheet/) and an [active buzzer](https://www.raspberrypi.org/learning/physical-computing-with-python/buzzer/) emitting a number of beeps equal to the number of LEDs lit.
 
-The mine detector has two indication methods, a distance scale made of four LEDs and an [active buzzer](https://www.raspberrypi.org/learning/physical-computing-with-python/buzzer/) emitting a number of beeps equal to the number of LEDs lit.
-
-The connections are as per the circuit below. The positive (long) legs of the LEDs as well as the active buzzer positive pin are connected to the Raspberry Pi GPIO pins indicated in the table below. The negative (short) legs of the LEDs are connected to ground through 220 ohm resistors. The buzzer ground pin is connected directly to ground. If using a breadboard as shown, the breadboard ground must be connected to one of the Raspberry Pi ground pins.
+The connections are as per the circuit below. The positive (long) legs of the LEDs as well as the active buzzer positive pin are connected to the Raspberry Pi GPIO pins indicated in the table below. The negative (short) legs of the LEDs are connected to ground through 220 ohm resistors (or any value above 50 ohm). The buzzer ground pin is connected directly to ground. If using a breadboard as shown, the breadboard ground must be connected to one of the Raspberry Pi ground pins.
 
 Device | GPIO pin
 -------|----------
