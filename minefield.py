@@ -89,25 +89,25 @@ def popMines(mines, point, distance):
     """
     # list of the indexes of mines in proximity of the point (initially empty)
     minesProx = []
-    
+
     # for all mines,
     for i in range(len(mines)):
-        
+
          # calculate distance to mine
         distMine = point.distAxes(mines[i], 5)
-        
+
         # if mine is within specified distance
         if distMine <= distance:
             # add mine index to proximity list
             minesProx.append(i)
-            
+
     # if there are mines in the proximity list
     if len(minesProx) > 0:
         # for all mine indexes in proximity list
         for i in minesProx:
             # remove mine from mines list
             mines.pop(i)
-            
+
     # print number of mines eliminated
     print("   ", len(minesProx), " Mines eliminated.")
     # return mines list
@@ -244,8 +244,8 @@ goalReached = False
 succeeded = False
 
 # Post player instructions in Minecraft window
-mc.postToChat("Find and destroy the gold block")
-mc.postToChat("Beware of mines!!!")
+mc.postToChat("Find and destroy the block of gold")
+mc.postToChat("Beware of the mines!!!")
 mc.postToChat("Use your mine detector to avoid mines")
 
 print("Game start")
@@ -271,7 +271,7 @@ try:
         for mine in mines:
             # calculate distance to mine in horizontal plane
             dist = pos.distAxes(mine, 5)
-            
+
             # if distance is smaller than current min distance
             if dist < distMin:
                 # set distance as new min distance
@@ -294,8 +294,8 @@ try:
                 goalReached = True
                 # post messages to Minecraft chat
                 mc.postToChat("Objective reached!")
-                mc.postToChat("Now return to base (red block)")
-                mc.postToChat("and destroy the block")
+                mc.postToChat("Now return to your starting point marked")
+                mc.postToChat("by a red block and destroy the block")
 
         # check if the base block is has been hit (block is air)
         if mc.getBlock(base.x, base.y, base.z) == 0:
@@ -308,7 +308,7 @@ try:
             # if goal is not already reached, player must first reach the goal
             else:
                 # post message to Minecraft chat
-                mc.postToChat("You must fist find and destroy the gold block")
+                mc.postToChat("You must fist find and destroy the block of gold")
                 # put back the base block
                 mc.setBlock(base.x, base.y, base.z, block.GLOWING_OBSIDIAN)
 
@@ -325,7 +325,7 @@ try:
         # post messages to Minecraft chat
         mc.postToChat("BOOM!!!")
         mc.postToChat(" ")
-        mc.postToChat("Oh oh... You are dead!")
+        mc.postToChat("Oh oh... Looks like you are dead!")
         print("Player is dead - cleaning up game")
 
         # set base and goal blocks to air
@@ -339,7 +339,8 @@ try:
     # case where the player has succeeded in completing the mission
     else:
         # post message to Minecraft chat
-        mc.postToChat("Congratulations, you have succeeded!")
+        mc.postToChat("Congratulations, you have successfully")
+        mc.postToChat("finished your mission!")
 
         # stop mine detector
         mineDetector.off()
