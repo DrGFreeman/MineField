@@ -138,7 +138,7 @@ goalDist = 40
 ########################################
 ### Game preparation
 
-# Initialisation of the mine detector
+# Initialization of the mine detector
 mineDetector = MineDetector(distBlue, distGreen, distYellow, distRed)
 
 # Connection to Minecraft Pi
@@ -237,10 +237,10 @@ mc.player.setTilePos(base.x + 1, mc.getHeight(base.x + 1, base.z), base.z)
 # Is the player alive?
 alive = True
 
-# Is the goal reached
+# Is the goal reached?
 goalReached = False
 
-# Has the mission succeeded
+# Has the mission succeeded?
 succeeded = False
 
 # Post player instructions in Minecraft window
@@ -264,7 +264,7 @@ try:
         pos = Pt3D(p.x, p.y, p.z)
 
         ## Calculate distance to the nearest mine
-        # set min distance to a large value
+        # set initial min distance to a large value
         distMin = 1000000.
 
         # do for each mine
@@ -272,15 +272,15 @@ try:
             # calculate distance to mine in horizontal plane
             dist = pos.distAxes(mine, 5)
 
-            # if distance is smaller than current min distance
+            # if distance to mine is smaller than current min distance
             if dist < distMin:
-                # set distance as new min distance
+                # set distance as new minimum distance
                 distMin = dist
 
-        # display distance on mine detector (LEDs and buzzer)
+        # display minimum distance on mine detector (LEDs and buzzer)
         mineDetector.onValue(distMin)
 
-        # if distance is smaller than mine trigger distance...
+        # if minimum distance is smaller than mine trigger distance...
         if distMin <= distMineTrigger:
             # the player is dead!
             alive = False
@@ -302,7 +302,7 @@ try:
 
             # if goal is already reached
             if goalReached:
-                # set succeeded to true
+                # player has completed the mission
                 succeeded = True
 
             # if goal is not already reached, player must first reach the goal
@@ -312,7 +312,7 @@ try:
                 # put back the base block
                 mc.setBlock(base.x, base.y, base.z, block.GLOWING_OBSIDIAN)
 
-    ## Game end
+    ## Game ending
 
     # stop mine detector buzzer
     mineDetector.buzzer.stop()
@@ -347,9 +347,11 @@ try:
 
         # calculate play time
         playTime = time.time() - timeStart
+
         # calculate minutes and seconds from play time
         minutes = str(int(playTime // 60))
         seconds = str(int(playTime % 60))
+
         # display play time to Minecraft chat
         mc.postToChat(("Time: " + minutes + "m " + seconds + "s"))
 
@@ -362,7 +364,7 @@ finally:
     # set base and goal blocks to air
     clean()
 
-    # stop mine detector
+    # stop mine detector LEDs and buzzer
     mineDetector.off()
     mineDetector.buzzer.stop()
 
