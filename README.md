@@ -73,33 +73,33 @@ Buzzer | 4
 
 # Notes
 
-* The game is designed to work with Python version 3.x.
+* The game is designed to work with Python 3.
 * The game can be played without the buzzer _or_ LEDs. This may make it more difficult to avoid mines.
 * The game difficulty can be adjusted by changing the parameters below in the minefield.py file.
 
-```python
-########################################
-### Game settings
-# Adjust these settings to control game difficulty level
+    ```python
+    ########################################
+    ### Game settings
+    # Adjust these settings to control game difficulty level
 
-# Distance thresholds for mine detector LEDs and buzzer
-distBlue = 16
-distGreen = 8
-distYellow = 5
-distRed = 3
+    # Distance thresholds for mine detector LEDs and buzzer
+    distBlue = 16
+    distGreen = 8
+    distYellow = 5
+    distRed = 3
 
-# Distance threshold for mine explosion
-distMineTrigger = 1 # The mine explodes if the player is within this distance
+    # Distance threshold for mine explosion
+    distMineTrigger = 1 # The mine explodes if the player is within this distance
 
-# Number of mines
-nbMines = 200
+    # Number of mines
+    nbMines = 200
 
-# Extent of mine coverage around player (+/-)
-extentMines = 100
+    # Extent of mine coverage around player (+/-)
+    extentMines = 100
 
-# Distance to goal
-goalDist = 40
-```
+    # Distance to goal
+    goalDist = 40
+    ```
 
 # Version history
 1.0.0 (2017-04-16): Initial documented release
