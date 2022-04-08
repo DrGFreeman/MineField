@@ -12,7 +12,7 @@ The player must find and destroy a [block of gold](http://minecraft.gamepedia.co
 
 Simple? Not so much!!!
 
-The issue is that the Minecraft world is strewn with invisible land mines that the player must avoid to stay alive. To help him or her, the player is equipped with a mine detector indicating the distance to the nearest mine. The mine detector consists of four LEDs that light depending on the distance to the nearest mine, as well as a buzzer that buzzes an increasing number of beeps as the player gets closer to a mine. With the help of the mine detector, the player must navigate around the mines to find the block of gold and return to the starting point.
+The issue is that the Minecraft world is strewn with invisible land mines that the player must avoid to stay alive. To help them, the player is equipped with a mine detector indicating the distance to the nearest mine. The mine detector consists of four LEDs that light depending on the distance to the nearest mine, as well as a buzzer that buzzes an increasing number of beeps as the player gets closer to a mine. With the help of the mine detector, the player must navigate around the mines to find the block of gold and return to the starting point.
 
 Try it out and _have a blast_!
 
